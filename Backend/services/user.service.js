@@ -12,12 +12,12 @@ module.exports.createUser = async ({
   }
   const user = userModel.create({
     fullName: {
-        firstName,
-        lastName
+      firstName,
+      lastName,
     },
     email,
     password,
-  })
+  });
 
   return user;
 };

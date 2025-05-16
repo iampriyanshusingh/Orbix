@@ -2,24 +2,24 @@ const userModel = require("../models/user.model");
 const userService = require("../services/user.service");
 const { validationResult } = require("express-validator");
 
-//will take the response from the user by .post api 
+//will take the response from the user by .post api
 module.exports.registerUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { firstName, lastName, email, password } = req.body;
+  const { fullName, email, password } = req.body;
 
   const hashedPassword = await userModel.hashPassword(password);
 
   const user = await userService.createUser({
-    firstName,
-    lastName,
+    firstName: fullName.firstName,
+    lastName: fullName.lastName,
     email,
     password: hashedPassword,
   });
 
-  const token = await userModel.generateToken(user);
+  const token = await userModel.generateAuthToken();
   res.status(201).json({ token, user });
 };
