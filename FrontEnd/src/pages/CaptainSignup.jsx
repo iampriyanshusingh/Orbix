@@ -9,7 +9,6 @@ const CaptainSignup = () => {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  // const [user, setUser] = useState({});
 
   const navigate = useNavigate();
 
@@ -27,7 +26,7 @@ const CaptainSignup = () => {
     };
 
     const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/captain/register`,
+      `${import.meta.env.VITE_BASE_URL}/users/register`,
       newUser
     );
 
