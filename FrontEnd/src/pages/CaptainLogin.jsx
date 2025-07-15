@@ -20,7 +20,7 @@ const CaptainLogin = () => {
   return (
     <div className="p-7 h-screen flex flex-col justify-between">
       <div>
-        <img src={logo} className="w-16 mb-10" />
+        <img src={logo} className="w-20 mb-10" />
         <form
           onSubmit={(e) => {
             submitHandler(e);
@@ -57,10 +57,10 @@ const CaptainLogin = () => {
       </div>
       <div>
         <Link
-          to="/captain-login"
+          to="/user-login"
           className="bg-[#d5622d] flex items-center justify-center text-white font-semibold mb-5 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base"
         >
-          Sign in as Captain
+          Sign in as User
         </Link>
       </div>
     </div>

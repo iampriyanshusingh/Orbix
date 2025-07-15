@@ -21,7 +21,7 @@ const UserLogin = () => {
   return (
     <div className="p-7 h-screen flex flex-col justify-between">
       <div>
-        <img src={logo} className="w-16 mb-10" />
+        <img src={logo} className="w-20 mb-10" />
         <form
           onSubmit={(e) => {
             submitHandler(e);
