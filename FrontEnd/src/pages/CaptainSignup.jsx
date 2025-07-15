@@ -1,36 +1,51 @@
-import React, { useState } from "react";
-import logo from "../assets/react.png";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import logo from "../assets/logo_captain.png";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserDataContext } from "../context/UserContext";
 
 const CaptainSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [userData, setUserData] = useState({});
+  // const [user, setUser] = useState({});
 
-  const submitHandler = (e) => {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useContext(UserDataContext);
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    setUserData({
+    const newUser = {
       fullName: {
         firstName: firstName,
         lastName: lastName,
       },
       email: email,
       password: password,
-    });
+    };
 
-    console.log(userData);
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/captain/register`,
+      newUser
+    );
 
-    firstName("");
-    lastName("");
+    if (response.status === 201) {
+      const data = response.data;
+      setUser(data.user);
+      navigate("/login");
+    }
+
+    setFirstName("");
+    setLastName("");
     setEmail("");
     setPassword("");
   };
   return (
     <div className="py-5 px-7 h-screen flex flex-col justify-between">
       <div>
-        <img src={logo} className="w-20 mb-10" />
+        <img src={logo} className="w-23 mb-10" />
         <form
           onSubmit={(e) => {
             submitHandler(e);
@@ -83,7 +98,7 @@ const CaptainSignup = () => {
           />
 
           <button className="bg-[#111] text-white font-semibold mb-5 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base">
-            Login
+            Sign Up
           </button>
         </form>
 
