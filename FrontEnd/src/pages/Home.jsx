@@ -9,8 +9,10 @@ const Home = () => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
   const [paneleOpen, setPanelOpen] = useState(false);
+  const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false);
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
+  const vehiclePanelRef = useRef(null);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -37,6 +39,21 @@ const Home = () => {
       });
     }
   }, [paneleOpen]);
+
+  useGSAP(
+    function () {
+      if (vehiclePanelOpen) {
+        gsap.to(vehiclePanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(vehiclePanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [vehiclePanelOpen]
+  );
 
   return (
     <div className="h-screen relative overflow-hidden">
@@ -84,10 +101,25 @@ const Home = () => {
           </form>
         </div>
         <div ref={panelRef} className="h-0 bg-white opacity-0">
-          <LocationSearchPanel />
+          <LocationSearchPanel
+            setVehiclePanelOpen={setVehiclePanelOpen}
+            setPanelOpen={setPanelOpen}
+          />
         </div>
       </div>
-      <div className="fixed w-full z-10 bottom-0 bg-white px-3 py-6">
+      <div
+        ref={vehiclePanelRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-14"
+      >
+        <h5
+          onClick={() => {
+            setVehiclePanelOpen(false);
+          }}
+          className="p-1 text-center w-[93%] absolute top-0"
+        >
+          <i className="text-3xl text-gray-500 ri-arrow-down-wide-line"></i>
+        </h5>
+
         <h3 className="text-2xl font-semibold mb-5">Choose a Vehicle</h3>
 
         <div
